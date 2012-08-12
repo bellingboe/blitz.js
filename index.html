@@ -245,6 +245,7 @@
 							var count_hidden = $this.find("div.hidden-pool").length;
 							if(count_hidden > 0){
 								$this.find(".show-pool-button").html("Show "+count_hidden+" More").slideDown().css("display","block").css("clear","both");
+								update_doc_title();
 							}
 						}
 					}
