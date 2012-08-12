@@ -20,11 +20,11 @@ function fadeHint(divId,color) {
 	//(This example comes from a project which used three main site colors: 
 	//Green, Blue, and Grey)
 
-	$(divId).css("-webkit-transition","all 1.5s ease")
+	$(divId).css("backgroundColor",color).css("-webkit-transition","all 3.5s ease")
 	.css("backgroundColor","white")
-	.css("-moz-transition","all 1.5s ease")
-	.css("-o-transition","all 1.5s ease")
-	.css("-ms-transition","all 1.5s ease")
+	.css("-moz-transition","all 3.5s ease")
+	.css("-o-transition","all 3.5s ease")
+	.css("-ms-transition","all 3.5s ease")
 	/* Avoiding having to use a jQ plugin. */
 
 	.css("backgroundColor",color).delay(500).queue(function() {
