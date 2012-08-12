@@ -9,7 +9,7 @@ function fadeHint(divId,color) {
 		break;
 	
 		case "yellow":
-		color = "#fff47d";
+		color = "#fff9d7";
 		break;
 
 		default: //if "grey" or some misspelled name (error safe).
@@ -20,7 +20,7 @@ function fadeHint(divId,color) {
 	//(This example comes from a project which used three main site colors: 
 	//Green, Blue, and Grey)
 
-	$(divId).css("backgroundColor",color).css("-webkit-transition","all 3.5s ease")
+	$(divId).css("backgroundColor",color).css("-webkit-transition","all 0.1s ease").delay(2000).css("-webkit-transition","all 3.5s ease")
 	.css("backgroundColor","white")
 	.css("-moz-transition","all 3.5s ease")
 	.css("-o-transition","all 3.5s ease")
@@ -31,5 +31,4 @@ function fadeHint(divId,color) {
 		$(this).css("backgroundColor","white"); 
 		$(this).dequeue(); //Prevents box from holding color with no fadeOut on second click.
 	}); 
-	//three distinct colors of green, grey, and blue will be set here.
 }
