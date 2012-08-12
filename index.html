@@ -104,7 +104,9 @@
 				$(".show-pool-button").click(function(ev){
 					ev.preventDefault();
 					var $t = $(this);
-					$t.hide().siblings(".ui-dashbox-content").find(".hidden-pool").removeClass("hidden-pool").css("background","#98c5f7").show();
+					$t.hide().siblings(".ui-dashbox-content").find(".hidden-pool").removeClass("hidden-pool").show().each(function(){
+						fadeHint("#"+$(this).attr('id'),"yellow");
+					});
 					update_doc_title();
 				});
 				
