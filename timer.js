@@ -32,10 +32,3 @@ function start_timer(c){
 	c.timerFinish = new Date().getTime()+(c.timerSeconds*1000);
 	c.timer = setInterval(function(){ stopWatch(c) },50);
 }
-
-function update_doc_title(){
-	var count = $(".hidden-pool").length;
-	if(count > 0){
-		document.title = "#dashblitz ("+count+")";
-	}
-}

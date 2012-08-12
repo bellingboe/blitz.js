@@ -68,6 +68,13 @@
 			
 			var main_column_timer = 60000;
 			
+			function update_doc_title(){
+				var count = $(".hidden-pool").length;
+				if(count > 0){
+					document.title = "#dashblitz ("+count+")";
+				}
+			}
+			
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script src="jquery.masonry.min.js"></script>
