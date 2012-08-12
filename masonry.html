@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+	<head>
+		<!--
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+		-->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link href="style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<header class="main" style="display:none;">
+			<span>#dashblitz</span>
+		</header>
+		<section id="powerblue" style="display:none;">
+			<div id="bird"></div>
+		</section>
+		<section id="main_dashbox">
+			<div class="ui-dashbox" data-objects="#Olympics">
+				<header><span>#Olympics</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<section class="ui-dashbox-content">
+					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
+				</section>
+				<footer>
+					<a href="#" class="uibutton">Reveal Older</a>
+				</footer>
+			</div>
+			<div class="ui-dashbox" data-objects="#MSL">
+				<header><span>#MSL</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<section class="ui-dashbox-content">
+					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
+				</section>
+				<footer>
+					<a href="#" class="uibutton">Reveal Older</a>
+				</footer>
+			</div>
+			<div class="ui-dashbox" data-objects="#iPhone,#Apple">
+				<header><span>#iPhone,#Apple</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<section class="ui-dashbox-content">
+					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
+				</section>
+				<footer>
+					<a href="#" class="uibutton">Reveal Older</a>
+				</footer>
+			</div>
+			<div class="ui-dashbox" data-objects="#Obama">
+				<header><span>#Obama</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<section class="ui-dashbox-content">
+					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
+				</section>
+				<footer>
+					<a href="#" class="uibutton">Reveal Older</a>
+				</footer>
+			</div>
+		</section>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="jquery.masonry.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				
+				/*
+					build twitter search url for any given item
+				*/
+				function build_search_query(q){
+					return "http://search.twitter.com/search.json?q="+encodeURIComponent(q)+"&rpp=5&include_entities=true&result_type=recent&locale=en";
+				}
+				
+				/*
+					build single tweet item
+				*/
+				function build_tweet_display(cr,ob){
+					var $this = ob;
+					var img = cr.profile_image_url;
+					var tweet = cr.text;
+					var real_name = cr.from_user_name;
+					var tname = cr.from_user;
+					var created = cr.created_at;
+					var tweet_item = $("<div>");
+					tweet_item.addClass("tweet-item");
+					tweet_item.attr("data-created",created);
+					
+						var tweet_item_img = $("<div>");
+						tweet_item_img.addClass("tweet-item-img");
+							var tweet_item_img_img = $("<img>");
+							tweet_item_img_img.attr("src",img).attr("alt",real_name+"on Twitter");
+							tweet_item_img_img.appendTo(tweet_item_img);
+							
+							tweet_item_img.appendTo(tweet_item);
+							
+						var tweet_item_details = $("<div>");
+						tweet_item_details.addClass("tweet-item-details");
+							var tweet_item_details_strong = $("<strong>");
+							//tweet_item_details_strong.append(real_name);
+								var tweet_item_details_strong_a = $("<a>");
+								tweet_item_details_strong_a.attr("href","http://twitter.com/"+tname).html("@"+tname);
+								tweet_item_details_strong_a.appendTo(tweet_item_details_strong);
+							tweet_item_details_strong.appendTo(tweet_item_details);
+							
+							var tweet_item_details_p = $("<p>");
+							tweet_item_details_p.html(tweet);
+							tweet_item_details_p.appendTo(tweet_item_details);
+							
+						tweet_item_details.appendTo(tweet_item);
+							
+					tweet_item.appendTo( $this.find(".ui-dashbox-content") );
+				}
+
+				function card_cb(d,o,box,box_count,curr_iteration,obj){
+					console.log("o: "+o+" ("+curr_iteration+" / "+box_count+")");
+					console.log(d);
+					var resp = d;
+					var $this = obj;
+					$this.attr("data-last-loaded",resp.results[0].id_str);
+					if("undefined" == typeof $this.attr("data-obj-count")){
+						$this.attr("data-obj-count",1);
+					}else{
+						$this.attr("data-obj-count", parseInt($this.attr("data-obj-count"))+1 );
+					}
+					if(!resp.results){
+						$this.find(".ui-dashbox-content").find("p.dashbox-loading").html("There was a problem talking to Twitter =(");
+					}else if(resp.results.length == 0){
+						$this.find(".ui-dashbox-content").find("p.dashbox-loading").html("No Tweets to display.");
+					}else{
+						$this.find(".ui-dashbox-content").find("p.dashbox-loading").remove();
+						for(var r in d.results){
+							cr = d.results[r];
+							box.push(cr);
+						}
+						//if(curr_iteration==box_count){
+						if( parseInt($this.attr("data-obj-count"))==box_count ){
+							$(this).removeAttr("data-obj-count");
+							box.sort(function (a, b) {
+								return (new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+							});
+							box.splice(5,5);
+							for(var r in box){
+								build_tweet_display( box[r] , $this );
+							}
+						}
+					}
+				}
+				
+				var build_card_entry = function(cb,co,box,box_count,curr_iteration,obj){
+					the_url = build_search_query(co);
+					var jsonp_url = the_url+"&callback=?";
+					
+					$.getJSON(jsonp_url,{},function(res){
+						cb(res,co,box,box_count,curr_iteration,obj);
+					}).error(function(){ obj.find(".ui-dashbox-content").find("p.dashbox-loading").html("Problem contacting Twitter..."); });
+				}
+				
+				$("#main_dashbox").masonry({
+				  itemSelector : '.ui-dashbox'
+				});
+				
+				$(".ui-dashbox").each(function(){
+					var $this = $(this);
+					var $objects = $this.attr("data-objects");
+					var $obj_arr = $objects.split(",");
+					var count = $obj_arr.length;
+					var box_list = [];
+					
+					for (var i in $obj_arr){
+						var curr_iteration = parseInt(i)+1;
+						var is_search,
+							is_person,
+							the_url,
+							method,
+							cr;
+						var c_o = $obj_arr[i];
+						var first = c_o[0];
+						if(first!=="@"){
+							is_search = true;
+							is_person = false;
+						}else{
+							is_search = false;
+							is_person = true;
+						}
+						
+						if(is_search){
+							the_url = build_search_query(c_o);
+							method = "get";
+						}else{
+							// TODO
+						}
+						
+						if(method=="get"){
+									build_card_entry(card_cb,
+											   c_o,
+											   box_list,
+											   count,
+											   curr_iteration,
+											   $this);
+						}
+					}
+				});
+				
+				function column_sizer(){
+					
+					/*
+					var $ww = $(window).width();
+					if($ww>=1280){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").addClass("fourColWidth"); // 4 columns
+					}else if($ww<1280 && $ww>=960){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("fourColWidth").addClass("threeColWidth"); // 3 columns!
+					}else if($ww<960 && $ww>=640){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("halfWidth"); // 2 columns!
+					}else if($ww<640){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("fullWidth"); // 1 column!
+					}else{
+						$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
+					}*/
+					
+				}
+				
+				mobileOrientationScale();
+				
+				column_sizer();
+				
+				$(window).resize(function(){
+					resizeTrigger(mobileOrientationScale);
+					column_sizer();
+				});
+				
+				/* ==========================================================
+				 * BaseWeb - jQuery Functions
+				 * https://github.com/sebnitu/BaseWeb
+				 * ==========================================================
+				 * Copyright 2012 Sebastian Nitu.
+				 * ========================================================== */
+				
+				/* ==========================================================
+					Utility Functions
+				============================================================= */
+				
+				/**
+				 * Orientation and scale fix for iPhone & iPad
+				 * Script by Jeremy Keith: http://adactio.com/journal/4470/
+				 */
+				function mobileOrientationScale() {
+					if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+						var viewportmeta = document.querySelector('meta[name="viewport"]');
+						if (viewportmeta) {
+							viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no';
+							document.body.addEventListener('gesturestart', function () {
+								viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=1.0, user-scalable=no';
+							}, false);
+						}
+					}
+				}
+				
+				/**
+				 * Desktop, Tablet, Phone classes
+				 */
+				function responsiveClasses() {
+					var viewWidth = $(window).width();
+					if (viewWidth >= 960) {
+						$('body')
+							.addClass('baseweb-desktop')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-mobile')
+							.removeClass('baseweb-smaller-mobile');
+					} else if ( (viewWidth < 960) && (viewWidth >= 768) ) {
+						$('body')
+							.addClass('baseweb-tablet')
+							.removeClass('baseweb-desktop')
+							.removeClass('baseweb-mobile')
+							.removeClass('baseweb-smaller-mobile');
+					} else if ( (viewWidth < 767) && (viewWidth >= 480) ) {
+						$('body')
+							.addClass('baseweb-mobile')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-desktop')
+							.removeClass('baseweb-smaller-mobile');
+					} else if (viewWidth < 480) {
+						$('body')
+							.addClass('baseweb-mobile')
+							.addClass('baseweb-smaller-mobile')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-desktop');
+					}
+				}
+				
+				/**
+				 * Equal Heights Function
+				 * Script by Rob Glazebrook: http://www.cssnewbie.com/equal-height-columns-with-jquery/
+				 */
+				function equalHeight(group) {
+					var tallest = 0;
+					group.css({ 'height' : 'auto' }).each(function() {
+						var thisHeight = $(this).height();
+						if(thisHeight > tallest) {
+							tallest = thisHeight;
+						}
+					});
+					group.height(tallest);
+				}
+				
+				/**
+				 * Call function on browser resize
+				 */
+				function resizeTrigger(callback, delay) {
+					// Delay before function is called
+					delay = delay || 100;   
+					// Call function on resize
+					var resizeTimer;
+					$(window).resize(function() {
+						clearTimeout(resizeTimer);
+						resizeTimer = setTimeout(function() {
+							callback();
+						}, delay);
+					});
+				}
+				
+				/* ==========================================================
+					End of jQuery Functions
+				============================================================= */
+				
+			});
+		</script>
+		
+	</body>
+</html>

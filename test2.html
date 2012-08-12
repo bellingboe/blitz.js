@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		
+	</head>
+	<body>
+
+		<section id="main_dashbox">
+			<div class="ui-dashbox" data-objects="#Olympics">
+
+			</div>
+			<div class="ui-dashbox" data-objects="#MSL">
+
+			</div>
+			<div class="ui-dashbox" data-objects="#iPhone|#Apple">
+
+			</div>
+			<div class="ui-dashbox" data-objects="#Obama">
+				
+			</div>
+		</section>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				
+				var box_list = [];
+				
+				function build_search_query(q){
+					return "http://search.twitter.com/search.json?q="+encodeURIComponent(q)+"&rpp=5&include_entities=true&result_type=recent";
+				}
+
+				function card_cb(d,o,box,box_count,curr_iteration){
+					for(var r in d.results){
+						cr = d.results[r];
+						box.push(cr);
+					}
+					if(curr_iteration==box_count){
+						console.log(box);
+						box.sort(function (a, b) {
+							return a.id - b.id;
+						});
+						
+					}
+				}
+				
+				var build_card_entry = function(cb,co,box,box_count,curr_iteration){
+							the_url = build_search_query(co);
+							var jsonp_url = the_url+"&callback=?";
+							
+							$.getJSON(jsonp_url,{},function(res){
+								cb(res,co,box,box_count,curr_iteration);
+							});
+				}
+				
+				$(".ui-dashbox").each(function(){
+					var $this = $(this);
+					var $objects = $this.attr("data-objects");
+					var $obj_arr = $objects.split("|");
+					var count = $obj_arr.length;
+					var box_list = [];
+					
+					for (var i in $obj_arr){
+						var current_object = $obj_arr[i];
+						var curr_iteration = parseInt(i)+1;
+
+						build_card_entry(card_cb,
+								   current_object,
+								   box_list,
+								   count,
+								   curr_iteration);
+					}
+				});
+			});
+		</script>
+		
+	</body>
+</html>

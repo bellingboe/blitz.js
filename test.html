@@ -1,0 +1,584 @@
+<!doctype html>
+<html>
+	<head>
+		<!--
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+		-->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<style>
+			body{
+				background:#fff url(images/full_mosaic.jpg);
+				margin:0;
+				padding:0;
+				font-family: Helvetica, sans-serif;
+			}
+			a, a:link, a:active, a:visited{
+				color:#7ba8ed;
+				text-decoration: none;
+			}
+			header.main{
+				color:#fff;
+				width:100%;
+				height:247px;
+				/*background: #000 url(images/dashblitz.png) center no-repeat;*/
+				
+				background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.98) 99%, rgba(0,0,0,1) 100%), url(images/mosaic.jpg) no-repeat;
+				background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,1)), color-stop(50%,rgba(0,0,0,0)), color-stop(99%,rgba(0,0,0,0.98)), color-stop(100%,rgba(0,0,0,1))), url(images/mosaic.jpg) no-repeat;
+				background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.98) 99%,rgba(0,0,0,1) 100%), url(images/mosaic.jpg) no-repeat;
+				background: -o-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.98) 99%,rgba(0,0,0,1) 100%), url(images/mosaic.jpg) no-repeat;
+				background: -ms-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.98) 99%,rgba(0,0,0,1) 100%), url(images/mosaic.jpg) no-repeat;
+				background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.98) 99%,rgba(0,0,0,1) 100%), url(images/mosaic.jpg) no-repeat;
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );
+				background-position:center;
+				background-size:100%;
+			}
+			header.main span{
+				font-size: 48pt;
+				padding-top: 70px;
+				display: block;
+				text-align: center;
+				font-family: 'PT Sans', sans-serif;
+				text-shadow: 0px 0px 25px #ffffff, 0px 1px 0px #121212
+			}
+			#powerblue{
+				background:url(images/blue.png) repeat-x;
+				width:100%;
+				height:201px;
+				-webkit-box-shadow: 0px 2px 4px 0px #3b3b3b;
+				box-shadow: 0px 2px 4px 0px #3b3b3b;
+			}
+			#bird{
+				width:130px;
+				height:100px;
+				background: url(images/bird.png) no-repeat;
+				margin:0 auto;
+			}
+			#note{
+				width:675px;
+				height:74px;
+				background: url(images/exp_note.png) no-repeat;
+				margin:0 auto;
+			}
+			.ui-dashbox{
+				max-width:20%;
+				min-width:300px;
+				float:left;
+				border-radius:6px;
+				-webkit-border-radius: 6px;
+				padding:0;
+				background:#fff;
+				margin:10px;
+				-webkit-box-shadow: 0px 0px 10px 0px #4e4e4e;
+				box-shadow: 0px 0px 10px 0px #4e4e4e;
+			}
+			
+			.ui-dashbox::before,
+			.ui-dashbox::after{
+				-webkit-box-shadow: 0 20px 10px rgba(0, 0, 0, 0.75);
+				-moz-box-shadow: 0 20px 10px rgba(0, 0, 0, 0.75);
+				box-shadow: 0 20px 10px rgba(0, 0, 0, 0.75);
+				-webkit-transform: rotate(-4deg);
+				-moz-transform: rotate(-4deg);
+				-o-transform: rotate(-4deg);
+				-ms-transform: rotate(-4deg);
+				transform: rotate(-4deg);
+			}
+			
+			.fullWidth{
+				display:block;
+				max-width:none;
+				min-width:none;
+			}
+			
+			.columnWidth{
+				max-width:20%;
+				min-width:300px;
+			}
+			
+			.halfWidth{
+				width:48%;
+				margin:1%;
+				max-width: none;
+				min-width: none;
+			}
+			
+			.threeColWidth{
+				max-width: none;
+				min-width: none;
+				width:31%;
+				margin:1%;
+			}
+			
+			.fourColWidth{
+				max-width: none;
+				min-width: none;
+				width:23%;
+				margin:1%;
+			}
+			
+			@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+				.ui-dashbox{
+					width:48%;
+					margin:1%;
+					max-width: none;min-width:none;
+				}
+				.columnWidth{max-width: none;min-width:none;}
+				.fullWidth{max-width: none;min-width:none;}
+			}
+			
+			@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+				.ui-dashbox{
+					width:31%;
+					margin:1%;
+					max-width: none;min-width:none;
+				}
+				.columnWidth{max-width: none;min-width:none;}
+				.fullWidth{max-width: none;min-width:none;}
+			}
+			
+			.ui-dashbox img{
+				padding: 0;
+				margin: 0;
+				float: left;
+				border:0;
+			}
+			
+			.ui-dashbox header{
+				vertical-align: middle;
+				font-size: 14pt;
+				overflow:auto;
+				box-sizing: border-box;
+				background: rgb(19,153,242);
+				background: -moz-linear-gradient(top,  rgba(19,153,242,1) 0%, rgba(25,137,233,1) 22%, rgba(33,105,219,1) 43%, rgba(37,75,200,1) 68%, rgba(38,73,199,1) 73%, rgba(42,76,201,1) 78%, rgba(54,88,218,1) 89%, rgba(58,86,219,1) 95%, rgba(57,77,213,1) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(19,153,242,1)), color-stop(22%,rgba(25,137,233,1)), color-stop(43%,rgba(33,105,219,1)), color-stop(68%,rgba(37,75,200,1)), color-stop(73%,rgba(38,73,199,1)), color-stop(78%,rgba(42,76,201,1)), color-stop(89%,rgba(54,88,218,1)), color-stop(95%,rgba(58,86,219,1)), color-stop(100%,rgba(57,77,213,1)));
+				background: -webkit-linear-gradient(top,  rgba(19,153,242,1) 0%,rgba(25,137,233,1) 22%,rgba(33,105,219,1) 43%,rgba(37,75,200,1) 68%,rgba(38,73,199,1) 73%,rgba(42,76,201,1) 78%,rgba(54,88,218,1) 89%,rgba(58,86,219,1) 95%,rgba(57,77,213,1) 100%);
+				background: -o-linear-gradient(top,  rgba(19,153,242,1) 0%,rgba(25,137,233,1) 22%,rgba(33,105,219,1) 43%,rgba(37,75,200,1) 68%,rgba(38,73,199,1) 73%,rgba(42,76,201,1) 78%,rgba(54,88,218,1) 89%,rgba(58,86,219,1) 95%,rgba(57,77,213,1) 100%);
+				background: -ms-linear-gradient(top,  rgba(19,153,242,1) 0%,rgba(25,137,233,1) 22%,rgba(33,105,219,1) 43%,rgba(37,75,200,1) 68%,rgba(38,73,199,1) 73%,rgba(42,76,201,1) 78%,rgba(54,88,218,1) 89%,rgba(58,86,219,1) 95%,rgba(57,77,213,1) 100%);
+				background: linear-gradient(to bottom,  rgba(19,153,242,1) 0%,rgba(25,137,233,1) 22%,rgba(33,105,219,1) 43%,rgba(37,75,200,1) 68%,rgba(38,73,199,1) 73%,rgba(42,76,201,1) 78%,rgba(54,88,218,1) 89%,rgba(58,86,219,1) 95%,rgba(57,77,213,1) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1399f2', endColorstr='#394dd5',GradientType=0 );
+				padding:7px;
+				height:45px;
+				line-height:30px;
+				color:#f2f2f2;
+				text-shadow: 0px 1px 3px #424242;
+				-webkit-border-radius: 6px 6px 0px 0px;
+				border-radius: 6px 6px 0px 0px;
+				border-bottom:1px solid #1829b3;
+				-webkit-box-shadow: inset 0 1px 0 0 #6cbcfa;
+				box-shadow: inset 0 1px 0 0 #6cbcfa;
+			}
+			
+			.ui-dashbox header a,
+			.ui-dashbox header a:visited,
+			.ui-dashbox header a:link{
+				float:right;
+				display:block;
+				border-radius:6px;
+				padding:6px;
+				-webkit-border-radius:6px;
+				color:white;
+				text-decoration:none;
+				-moz-background-clip: padding;
+				-webkit-background-clip: padding-box;
+				background-clip: padding-box;
+				background-color: #fff;
+				-moz-box-shadow:
+					0 1px 0 rgba(11,128,226,.75),
+					inset 0 1px 0 rgba(0,0,0,.68),
+					inset 0 0 6px rgba(0,0,0,.23);
+				-webkit-box-shadow:
+					0 1px 0 rgba(11,128,226,.75),
+					inset 0 1px 0 rgba(0,0,0,.68),
+					inset 0 0 6px rgba(0,0,0,.23);
+				box-shadow:
+					0 1px 0 rgba(11,128,226,.75),
+					inset 0 1px 0 rgba(0,0,0,.68),
+					inset 0 0 6px rgba(0,0,0,.23);
+				background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGxpbmVhckdyYWRpZW50IGlkPSJoYXQwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjEwMCUiIHgyPSI1MCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZDJjYjkiIHN0b3Atb3BhY2l0eT0iMSIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzZGE3ZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICA8L2xpbmVhckdyYWRpZW50PgoKPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+				background-image: -moz-linear-gradient(90deg, #1d2cb9 0%, #3da7ff 100%);
+				background-image: -o-linear-gradient(90deg, #1d2cb9 0%, #3da7ff 100%);
+				background-image: -webkit-linear-gradient(90deg, #1d2cb9 0%, #3da7ff 100%);
+				background-image: linear-gradient(90deg, #1d2cb9 0%, #3da7ff 100%);
+			}
+			
+			.ui-dashbox header a:active{
+				background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGxpbmVhckdyYWRpZW50IGlkPSJoYXQwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjEwMCUiIHgyPSI1MCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZDJjYjkiIHN0b3Atb3BhY2l0eT0iMSIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxNjY4YWMiIHN0b3Atb3BhY2l0eT0iMSIvPgogICA8L2xpbmVhckdyYWRpZW50PgoKPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+				background-image: -moz-linear-gradient(90deg, #1d2cb9 0%, #1668ac 100%);
+				background-image: -o-linear-gradient(90deg, #1d2cb9 0%, #1668ac 100%);
+				background-image: -webkit-linear-gradient(90deg, #1d2cb9 0%, #1668ac 100%);
+				background-image: linear-gradient(90deg, #1d2cb9 0%, #1668ac 100%);
+			}
+			
+			.ui-dashbox .ui-dashbox-content{
+				padding:7px;
+				overflow-y:auto;
+			}
+			.ui-dashbox footer{
+				padding: 15px;
+				background: rgb(249,249,249);
+				background: -moz-linear-gradient(top,  rgba(249,249,249,1) 0%, rgba(247,247,247,1) 7%, rgba(239,239,239,1) 21%, rgba(237,237,237,1) 30%, rgba(247,247,247,1) 57%, rgba(245,245,245,1) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,249,249,1)), color-stop(7%,rgba(247,247,247,1)), color-stop(21%,rgba(239,239,239,1)), color-stop(30%,rgba(237,237,237,1)), color-stop(57%,rgba(247,247,247,1)), color-stop(100%,rgba(245,245,245,1)));
+				background: -webkit-linear-gradient(top,  rgba(249,249,249,1) 0%,rgba(247,247,247,1) 7%,rgba(239,239,239,1) 21%,rgba(237,237,237,1) 30%,rgba(247,247,247,1) 57%,rgba(245,245,245,1) 100%);
+				background: -o-linear-gradient(top,  rgba(249,249,249,1) 0%,rgba(247,247,247,1) 7%,rgba(239,239,239,1) 21%,rgba(237,237,237,1) 30%,rgba(247,247,247,1) 57%,rgba(245,245,245,1) 100%);
+				background: -ms-linear-gradient(top,  rgba(249,249,249,1) 0%,rgba(247,247,247,1) 7%,rgba(239,239,239,1) 21%,rgba(237,237,237,1) 30%,rgba(247,247,247,1) 57%,rgba(245,245,245,1) 100%);
+				background: linear-gradient(to bottom,  rgba(249,249,249,1) 0%,rgba(247,247,247,1) 7%,rgba(239,239,239,1) 21%,rgba(237,237,237,1) 30%,rgba(247,247,247,1) 57%,rgba(245,245,245,1) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#f5f5f5',GradientType=0 );
+				-webkit-border-radius: 0px 0px 6px 6px;
+				border-radius: 0px 0px 6px 6px;
+				-webkit-box-shadow: inset 0px -3px 6px 0px #c1c1c1;
+				box-shadow: inset 0px -3px 6px 0px #c1c1c1;
+				height: 45px;
+				border-top:1px solid #c7c7c7;
+			}
+			
+			.uibutton,
+			a.uibutton{
+				color:#6d6d6d;
+				background: rgb(255,255,255);
+				background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(235,235,235,1) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(235,235,235,1)));
+				background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(235,235,235,1) 100%);
+				background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(235,235,235,1) 100%);
+				background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(235,235,235,1) 100%);
+				background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(235,235,235,1) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ebebeb',GradientType=0 );
+				text-shadow: 0px 1px 0px #ffffff;
+				filter: dropshadow(color=#ffffff, offx=0, offy=1);
+				text-align:center;
+				padding:10px;
+				border-radius: 8px;
+				-webkit-border-radius: 8px;
+				text-decoration:none;
+				-webkit-box-shadow: 0px 1px 2px 0px rgba(65, 65, 65, .68);
+				box-shadow: 0px 1px 2px 0px rgba(65, 65, 65, .68);
+				border:1px solid rgba(65,65,65,.20);
+			}
+			
+			.uibutton:active{
+				border:1px solid rgba(65,65,65,.10);
+				-webkit-box-shadow: inset 0px 1px 2px 0px rgba(65, 65, 65, .68);
+				box-shadow: inset 0px 1px 2px 0px rgba(65, 65, 65, .68);
+				background: rgb(235,235,235);
+				background: -moz-linear-gradient(top, rgba(235,235,235,1) 0%, rgba(255,255,255,1) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,235,235,1)), color-stop(100%,rgba(255,255,255,1)));
+				background: -webkit-linear-gradient(top, rgba(235,235,235,1) 0%,rgba(255,255,255,1) 100%);
+				background: -o-linear-gradient(top, rgba(235,235,235,1) 0%,rgba(255,255,255,1) 100%);
+				background: -ms-linear-gradient(top, rgba(235,235,235,1) 0%,rgba(255,255,255,1) 100%);
+				background: linear-gradient(to bottom, rgba(235,235,235,1) 0%,rgba(255,255,255,1) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebebeb', endColorstr='#ffffff',GradientType=0 );
+			}
+			
+			.ui-dashbox .uibutton{
+				display:block;
+			}
+			
+			.tweet-item{
+				clear:both;
+				margin-bottom:10px;
+				padding-bottom:10px;
+				border-bottom:1px solid #c7c7c7;
+				
+				white-space: pre;           /* CSS 2.0 */
+				white-space: pre-wrap;      /* CSS 2.1 */
+				white-space: pre-line;      /* CSS 3.0 */
+				white-space: -pre-wrap;     /* Opera 4-6 */
+				white-space: -o-pre-wrap;   /* Opera 7 */
+				white-space: -moz-pre-wrap; /* Mozilla */
+				white-space: -hp-pre-wrap;  /* HP Printers */
+				word-wrap: break-word;      /* IE 5+ */
+				
+			}
+			
+			.tweet-item:last-child{
+				border-bottom:none;
+			}
+			
+			.tweet-item .tweet-item-img{
+				margin-right:5px;
+			}
+			
+			.tweet-item .tweet-item-img img{
+				float:none;
+			}
+			
+			.tweet-item div{
+				float:left;
+			}
+			
+			.tweet-item .tweet-item-details{
+				margin-left:5px;
+				font-size:11pt;
+				float:none;
+			}
+			
+			.tweet-item .tweet-item-details p{
+				margin: 5px;
+				padding-left:45px;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="main" style="display:none;">
+			<span>#dashblitz</span>
+		</header>
+		<section id="powerblue" style="display:none;">
+			<div id="bird"></div>
+		</section>
+		<section id="main_dashbox">
+			<div class="ui-dashbox" data-objects="#iPhone,#Apple">
+				<header><span>#iPhone,#Apple</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<section class="ui-dashbox-content">
+					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
+				</section>
+				<footer>
+					<a href="#" class="uibutton">Reveal Older</a>
+				</footer>
+			</div>
+		</section>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				
+				/* ==========================================================
+				 * BaseWeb - jQuery Functions
+				 * https://github.com/sebnitu/BaseWeb
+				 * ==========================================================
+				 * Copyright 2012 Sebastian Nitu.
+				 * ========================================================== */
+				
+				/* ==========================================================
+					Utility Functions
+				============================================================= */
+				
+				/**
+				 * Orientation and scale fix for iPhone & iPad
+				 * Script by Jeremy Keith: http://adactio.com/journal/4470/
+				 */
+				function mobileOrientationScale() {
+					if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+						var viewportmeta = document.querySelector('meta[name="viewport"]');
+						if (viewportmeta) {
+							viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no';
+							document.body.addEventListener('gesturestart', function () {
+								viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=1.0, user-scalable=no';
+							}, false);
+						}
+					}
+				}
+				
+				/**
+				 * Desktop, Tablet, Phone classes
+				 */
+				function responsiveClasses() {
+					var viewWidth = $(window).width();
+					if (viewWidth >= 960) {
+						$('body')
+							.addClass('baseweb-desktop')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-mobile')
+							.removeClass('baseweb-smaller-mobile');
+					} else if ( (viewWidth < 960) && (viewWidth >= 768) ) {
+						$('body')
+							.addClass('baseweb-tablet')
+							.removeClass('baseweb-desktop')
+							.removeClass('baseweb-mobile')
+							.removeClass('baseweb-smaller-mobile');
+					} else if ( (viewWidth < 767) && (viewWidth >= 480) ) {
+						$('body')
+							.addClass('baseweb-mobile')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-desktop')
+							.removeClass('baseweb-smaller-mobile');
+					} else if (viewWidth < 480) {
+						$('body')
+							.addClass('baseweb-mobile')
+							.addClass('baseweb-smaller-mobile')
+							.removeClass('baseweb-tablet')
+							.removeClass('baseweb-desktop');
+					}
+				}
+				
+				/**
+				 * Equal Heights Function
+				 * Script by Rob Glazebrook: http://www.cssnewbie.com/equal-height-columns-with-jquery/
+				 */
+				function equalHeight(group) {
+					var tallest = 0;
+					group.css({ 'height' : 'auto' }).each(function() {
+						var thisHeight = $(this).height();
+						if(thisHeight > tallest) {
+							tallest = thisHeight;
+						}
+					});
+					group.height(tallest);
+				}
+				
+				/**
+				 * Call function on browser resize
+				 */
+				function resizeTrigger(callback, delay) {
+					// Delay before function is called
+					delay = delay || 100;   
+					// Call function on resize
+					var resizeTimer;
+					$(window).resize(function() {
+						clearTimeout(resizeTimer);
+						resizeTimer = setTimeout(function() {
+							callback();
+						}, delay);
+					});
+				}
+				
+				/* ==========================================================
+					End of jQuery Functions
+				============================================================= */
+				
+				function build_search_query(q){
+					return "http://search.twitter.com/search.json?q="+encodeURIComponent(q)+"&rpp=5&include_entities=true&result_type=recent";
+				}
+				
+				function column_sizer(){
+					var $ww = $(window).width();
+					if($ww>=1280){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").addClass("fourColWidth"); // 4 columns
+					}else if($ww<1280 && $ww>=960){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("fourColWidth").addClass("threeColWidth"); // 3 columns!
+					}else if($ww<960 && $ww>=640){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("halfWidth"); // 2 columns!
+					}else if($ww<640){
+						$(".ui-dashbox").removeClass("columnWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("fullWidth"); // 1 column!
+					}else{
+						$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
+					}
+				}
+				
+				mobileOrientationScale();
+				
+				column_sizer();
+				
+				$(window).resize(function(){
+					resizeTrigger(mobileOrientationScale);
+					column_sizer();
+				});
+				$("a").click(function(ev){
+					ev.preventDefault();
+				});
+				$("a.sizeme").click(function(ev){
+					alert( $(window).width() );
+				});
+				
+				$("body").bind("touchend",function(ev){
+					$(ev.originalEvent.changedTouches[0].target).css('opacity',0.3);
+				});
+				
+				$(".ui-dashbox").each(function(){
+					var $this = $(this);
+					var $objects = $this.attr("data-objects");
+					var $obj_arr = $objects.split(",");
+					var box_list = [];
+					var c_o;
+					
+					console.log($obj_arr);
+					
+					for (var i in $obj_arr){
+						var is_search,
+							is_person,
+							the_url,
+							method,
+							cr;
+						c_o = $obj_arr[i];
+						var first = c_o[0];
+						if(first!=="@"){
+							is_search = true;
+							is_person = false;
+						}else{
+							is_search = false;
+							is_person = true;
+						}
+						
+						console.log("c_o: "+c_o);
+						console.log("is_search",is_search);
+						
+						if(is_search){
+							the_url = build_search_query(c_o);
+							method = "get";
+						}else{
+							// TODO
+						}
+						
+						console.log("the_url: "+the_url)
+						
+						if(method=="get"){
+							var jsonp_url = the_url+"&callback=?";
+							console.log("jsonp_url: "+jsonp_url);
+							$.getJSON(jsonp_url,{},function(res){
+								var resp = res;
+								console.log("===============");
+								console.log(c_o+" result object:");
+								console.log(resp);
+								console.log("===============");
+								$this.attr("data-last-loaded",resp.results[0].id_str);
+								if(!resp.results){
+									$this.find(".ui-dashbox-content").find("p.dashbox-loading").html("There was a problem talking to Twitter =(");
+								}else if(resp.results.length == 0){
+									$this.find(".ui-dashbox-content").find("p.dashbox-loading").html("No Tweets to display.");
+								}else{
+									$this.find(".ui-dashbox-content").find("p.dashbox-loading").remove();
+									
+									console.log("=============================");
+									console.log("TWEETS");
+									console.log("=============================");
+									
+									for(var r in resp.results){
+										cr = resp.results[r];
+										cr.search_url = jsonp_url;
+										console.log("pushing tweet in "+c_o+" ("+jsonp_url+")");
+										box_list.push(cr);
+										var img = cr.profile_image_url;
+										var tweet = cr.text;
+										var real_name = cr.from_user_name;
+										var tname = cr.from_user;
+										var created = cr.created_at;
+										var tweet_item = $("<div>");
+										tweet_item.addClass("tweet-item");
+										tweet_item.attr("data-created",created);
+										
+											var tweet_item_img = $("<div>");
+											tweet_item_img.addClass("tweet-item-img");
+												var tweet_item_img_img = $("<img>");
+												tweet_item_img_img.attr("src",img).attr("alt",real_name+"on Twitter");
+												tweet_item_img_img.appendTo(tweet_item_img);
+												
+												tweet_item_img.appendTo(tweet_item);
+												
+											var tweet_item_details = $("<div>");
+											tweet_item_details.addClass("tweet-item-details");
+												var tweet_item_details_strong = $("<strong>");
+												//tweet_item_details_strong.append(real_name);
+													var tweet_item_details_strong_a = $("<a>");
+													tweet_item_details_strong_a.attr("href","http://twitter.com/"+tname).html("@"+tname);
+													tweet_item_details_strong_a.appendTo(tweet_item_details_strong);
+												tweet_item_details_strong.appendTo(tweet_item_details);
+												
+												var tweet_item_details_p = $("<p>");
+												tweet_item_details_p.html(tweet);
+												tweet_item_details_p.appendTo(tweet_item_details);
+												
+											tweet_item_details.appendTo(tweet_item);
+												
+										tweet_item.appendTo( $this.find(".ui-dashbox-content") );
+									}
+									console.log("box list: "+c_o);
+									console.log(box_list);
+								}
+							}).error(function() { $this.find(".ui-dashbox-content").find("p.dashbox-loading").html("There was a problem talking to Twitter =("); });
+						}
+					}
+					
+				});
+			});
+		</script>
+		
+	</body>
+</html>
