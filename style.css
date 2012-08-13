@@ -65,7 +65,7 @@
 				margin:0 auto;
 			}
 			#note{
-				width:675px;
+				max-width:675px;
 				height:74px;
 				background: url(images/exp_note.png) no-repeat;
 				margin:0 auto;
@@ -128,6 +128,9 @@
 			}
 			
 			@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+				#bird,#note{
+					display:none;
+				}
 				.ui-dashbox{
 					width:48%;
 					margin:1%;
@@ -138,6 +141,9 @@
 			}
 			
 			@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+				#bird,#note{
+					display:none;
+				}
 				.ui-dashbox{
 					width:31%;
 					margin:1%;
