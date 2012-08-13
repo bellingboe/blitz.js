@@ -53,7 +53,7 @@
 					<a href="#" class="uibutton">Reveal Older</a>
 				</footer>
 			</div>
-			<div class="ui-dashbox" id="box_03" data-objects="#Obama">
+			<div class="ui-dashbox" id="box_3" data-objects="#Obama">
 				<header><div class="timer fill"></div><span>#Obama</span> <a href="#"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
 				<section class="ui-dashbox-content">
@@ -66,10 +66,19 @@
 		</section>
 		
 		<script>
-			/* timer for all columns. Default 1 minute. Feel free to change.
-			  although too often may make Twitter mad for a while (rate-limiting) */
+			/*
+				timer for all columns. Default 1 minute. Feel free to change.
+				although too often may make Twitter mad for a while (rate-limiting)
+			*/
 			
 			var main_column_timer = 60000;
+			
+			/*
+				master reference for all timers
+				read carefully
+			*/
+			
+			var timer_bag = new Array();
 			
 			function update_doc_title(){
 				var count = $(".hidden-pool").length;
@@ -92,7 +101,7 @@
 				
 				$(".ui-dashbox").attr("data-times-loaded",0);
 				
-				column_timer();
+				initial_ajax_kickoff();
 				
 				mobileOrientationScale();
 				

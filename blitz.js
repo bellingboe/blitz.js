@@ -188,27 +188,57 @@ var build_card_entry = function(cb,co,box,box_count,curr_iteration,obj){
 }
 
 /*
-	call this to start everything off
+	the funciton, to be run once, that sets everything in motion
 */
-function column_timer(){
-	column_ajax();
-	setInterval(function() {
-		column_ajax();
-	}, main_column_timer);
+function initial_ajax_kickoff(){
+	$(".ui-dashbox").each(function(){
+		single_card_run( $(this) );
+	});
+	console.log(timer_bag);
+}
+/*
+	 responsive design :D
+	 called on window resize hook
+	 currently 4-col is hard-coded max
+*/
+function column_sizer(){
+	var $ww = $(window).width();
+	if($ww>=1280){
+		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").addClass("fourColWidth"); // 4 columns
+	}else if($ww<1280 && $ww>=960){
+		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("fourColWidth").addClass("threeColWidth"); // 3 columns!
+	}else if($ww<960 && $ww>=640){
+		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("halfWidth"); // 2 columns!
+	}else if($ww<640){
+		$(".ui-dashbox").removeClass("columnWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("fullWidth"); // 1 column!
+	}else{
+		$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
+	}
+	
 }
 
-/*
-	the core of column_timer() but if this is called by
-	itself, it won't have any timer functionality.
-*/
-function column_ajax(){
-	$(".ui-dashbox").each(function(){
-		var $this = $(this);
+function create(str){
+	var id = $(".ui-dashbox").length;
+	var html = '<div class="ui-dashbox" id="box_'+id+'" data-objects="'+str+'"><header><div class="timer fill"></div><span>'+str+'</span> <a href="#"><img src="images/gear.png" /></a></header><a href="#" class="show-pool-button">Show More</a><section class="ui-dashbox-content"><p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p></section><footer><a href="#" class="uibutton">Reveal Older</a></footer></div>';
+	var obj = $(html).appendTo( $("#main_dashbox") );
+}
+
+function single_card_run(obj){
+		var $this = obj;
 		
-		$this.timer;
-		$this.timerCurrent;
-		$this.timerFinish;
-		$this.timerSeconds;
+		var my_index = $this.index();
+		
+		var $t = {};
+		
+		$t.obj = "#"+$this.attr('id');
+		$t.timer = null;
+		$t.timerCurrent = null;
+		$t.timerFinish = null;
+		$t.timerSeconds = null;
+		
+		if(!timer_bag[my_index]){
+			timer_bag[my_index] = $t;
+		}
 		
 		$this.find(".ui-dashbox-content").css("max-height",(parseInt($(window).height())-175)+"px");
 		var $objects = $this.attr("data-objects");
@@ -244,31 +274,4 @@ function column_ajax(){
 				build_card_entry(card_cb,c_o,box_list,count,curr_iteration,$this);
 			}
 		}
-	});
-}
-/*
-	 responsive design :D
-	 called on window resize hook
-	 currently 4-col is hard-coded max
-*/
-function column_sizer(){
-	var $ww = $(window).width();
-	if($ww>=1280){
-		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").addClass("fourColWidth"); // 4 columns
-	}else if($ww<1280 && $ww>=960){
-		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("halfWidth").removeClass("fourColWidth").addClass("threeColWidth"); // 3 columns!
-	}else if($ww<960 && $ww>=640){
-		$(".ui-dashbox").removeClass("columnWidth").removeClass("fullWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("halfWidth"); // 2 columns!
-	}else if($ww<640){
-		$(".ui-dashbox").removeClass("columnWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("fullWidth"); // 1 column!
-	}else{
-		$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
-	}
-	
-}
-
-function create(str){
-	var id = $(".ui-dashbox").length;
-	var html = '<div class="ui-dashbox" id="box_'+id+'" data-objects="'+str+'"><header><div class="timer fill"></div><span>'+str+'</span> <a href="#"><img src="images/gear.png" /></a></header><a href="#" class="show-pool-button">Show More</a><section class="ui-dashbox-content"><p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p></section><footer><a href="#" class="uibutton">Reveal Older</a></footer></div>';
-	var obj = $(html).appendTo( $("#main_dashbox") );
 }
