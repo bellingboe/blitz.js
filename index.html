@@ -11,6 +11,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<link rel="apple-touch-startup-image" href="images/startup.png">
 		<link rel="icon" href="favicon.ico" />
+		<link rel="stylesheet" href="bootstrap.css">
 		<title>#dashblitz</title>
 	</head>
 	<body>
@@ -24,7 +25,10 @@
 		</section>
 		<section id="main_dashbox">
 			<div class="ui-dashbox" id="box_0" data-objects="#Olympics">
-				<header><img class="indicator" src="images/indicator.gif" /><div class="timer fill"></div><span>#Olympics</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<header><img class="indicator" src="images/indicator.gif" />
+				<a href="#">
+					<div class="timer fill"></div>
+				</a><span>#Olympics</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
 				<section class="ui-dashbox-content">
 					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
@@ -34,7 +38,10 @@
 				</footer>
 			</div>
 			<div class="ui-dashbox" id="box_1" data-objects="#MSL">
-				<header><img class="indicator" src="images/indicator.gif" /><div class="timer fill"></div><span>#MSL</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<header><img class="indicator" src="images/indicator.gif" />
+				<a href="#">
+					<div class="timer fill"></div>
+				</a><span>#MSL</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
 				<section class="ui-dashbox-content">
 					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
@@ -44,7 +51,10 @@
 				</footer>
 			</div>
 			<div class="ui-dashbox" id="box_2" data-objects="#iPhone,#Apple">
-				<header><img class="indicator" src="images/indicator.gif" /><div class="timer fill"></div><span>#iPhone,#Apple</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<header><img class="indicator" src="images/indicator.gif" />
+				<a href="#">
+					<div class="timer fill"></div>
+				</a><span>#iPhone,#Apple</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
 				<section class="ui-dashbox-content">
 					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
@@ -54,7 +64,10 @@
 				</footer>
 			</div>
 			<div class="ui-dashbox" id="box_3" data-objects="#Obama">
-				<header><img class="indicator" src="images/indicator.gif" /><div class="timer fill"></div><span>#Obama</span> <a href="#"><img src="images/gear.png" /></a></header>
+				<header><img class="indicator" src="images/indicator.gif" />
+				<a href="#">
+					<div class="timer fill"></div>
+				</a><span>#Obama</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
 				<section class="ui-dashbox-content">
 					<p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p>
@@ -92,7 +105,7 @@
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script src="bootstrap/js/bootstrap-tooltip.js"></script>
-		<script src="jquery.masonry.min.js"></script>
+		<script src="bootstrap/js/bootstrap-modal.js"></script>
 		<script src="timer.js"></script>
 		<script src="color.js"></script>
 		<script src="mobile.js"></script>
@@ -113,9 +126,10 @@
 					column_sizer();
 				});
 				
-				$(".timer").tooltip();
+				$(".timer").parent().tooltip();
 				
-				$(".timer").click(function(){
+				$(".timer").parent().click(function(ev){
+					ev.preventDefault();
 					var $obj = $(this).parent().parent();
 					var p = $obj.attr("data-paused");
 					if(parseInt(p)==0){
