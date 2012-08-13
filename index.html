@@ -91,6 +91,7 @@
 			
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap-tooltip.js"></script>
 		<script src="jquery.masonry.min.js"></script>
 		<script src="timer.js"></script>
 		<script src="color.js"></script>
@@ -110,6 +111,20 @@
 				$(window).resize(function(){
 					resizeTrigger(mobileOrientationScale);
 					column_sizer();
+				});
+				
+				$(".timer").tooltip();
+				
+				$(".timer").click(function(){
+					var $obj = $(this).parent().parent();
+					var p = $obj.attr("data-paused");
+					if(parseInt(p)==0){
+						/* pause */
+						clear_timer($obj);
+					}else{
+						/* start */
+						single_card_run($obj,1);
+					}
 				});
 				
 				$(".show-pool-button").click(function(ev){

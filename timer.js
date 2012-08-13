@@ -36,12 +36,16 @@ function clear_timer(c){
 function clear_timer_by_index(i){
 	var t_o = timer_bag[i];
 	var $obj = $( t_o.obj );
+	$obj.attr("data-paused",1);
+	$obj.find(".timer").attr("title","Click to Start");
 	clearInterval( t_o.timer );
 	drawTimer($obj,0);
 }
 
 function start_timer(c){
 	var index = c.index();
+	c.attr("data-paused",0);
+	c.find(".timer").attr("title","Click to Pause");
 	timer_bag[index].timerSeconds = main_column_timer / 1000;
 	timer_bag[index].timerCurrent = 0;
 	timer_bag[index].timerFinish = new Date().getTime()+(timer_bag[index].timerSeconds*1000);

@@ -223,55 +223,70 @@ function create(str){
 	var obj = $(html).appendTo( $("#main_dashbox") );
 }
 
-function single_card_run(obj){
-		var $this = obj;
-		
-		var my_index = $this.index();
-		
-		var $t = {};
-		
-		$t.obj = "#"+$this.attr('id');
-		$t.timer = null;
-		$t.timerCurrent = null;
-		$t.timerFinish = null;
-		$t.timerSeconds = null;
-		
-		if(!timer_bag[my_index]){
-			timer_bag[my_index] = $t;
+function single_card_run_by_index(i){
+	var obj = $(".ui-dashbox").get(i);
+	single_card_run(obj);
+}
+
+function single_card_run(obj,initial_wait){
+	var $this = obj;
+	var w;
+	
+	if("undefined" == typeof initial_wait){
+		w = 0;
+	}else{
+		w = initial_wait;
+	}
+	
+	if(w==1){
+		start_timer($this);
+		return;
+	}
+	
+	var my_index = $this.index();
+	
+	var $t = {};
+	
+	$t.obj = "#"+$this.attr('id');
+	$t.timer = null;
+	$t.timerCurrent = null;
+	$t.timerFinish = null;
+	$t.timerSeconds = null;
+	
+	timer_bag[my_index] = $t;
+	
+	$this.find(".ui-dashbox-content").css("max-height",(parseInt($(window).height())-175)+"px");
+	var $objects = $this.attr("data-objects");
+	var $obj_arr = $objects.split(",");
+	var count = $obj_arr.length;
+	var box_list = [];
+	
+	for (var i in $obj_arr){
+		var curr_iteration = parseInt(i)+1;
+		var is_search,
+			is_person,
+			the_url,
+			method,
+			cr;
+		var c_o = $obj_arr[i];
+		var first = c_o[0];
+		if(first!=="@"){
+			is_search = true;
+			is_person = false;
+		}else{
+			is_search = false;
+			is_person = true;
 		}
 		
-		$this.find(".ui-dashbox-content").css("max-height",(parseInt($(window).height())-175)+"px");
-		var $objects = $this.attr("data-objects");
-		var $obj_arr = $objects.split(",");
-		var count = $obj_arr.length;
-		var box_list = [];
-		
-		for (var i in $obj_arr){
-			var curr_iteration = parseInt(i)+1;
-			var is_search,
-				is_person,
-				the_url,
-				method,
-				cr;
-			var c_o = $obj_arr[i];
-			var first = c_o[0];
-			if(first!=="@"){
-				is_search = true;
-				is_person = false;
-			}else{
-				is_search = false;
-				is_person = true;
-			}
-			
-			if(is_search){
-				the_url = build_search_query(c_o);
-				method = "get";
-			}else{
-				// TODO
-			}
-			
-			if(method=="get"){
-				build_card_entry(card_cb,c_o,box_list,count,curr_iteration,$this);
-			}
+		if(is_search){
+			the_url = build_search_query(c_o);
+			method = "get";
+		}else{
+			// TODO
 		}
+		
+		if(method=="get"){
+			build_card_entry(card_cb,c_o,box_list,count,curr_iteration,$this);
+		}
+	}
 }

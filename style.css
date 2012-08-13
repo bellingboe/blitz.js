@@ -361,6 +361,7 @@
 				border-radius:15px;
 				-webkit-border-radius:15px;
 				background:#4696f0;
+				cursor:pointer;
 			}
 			.timer > .percent {
 				position: absolute;
