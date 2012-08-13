@@ -131,6 +131,8 @@ function build_tweet_display(cr,ob,last){
 	obj: the .ui-dashbox Dom object the call was made for
 */
 function card_cb(d,o,box,box_count,curr_iteration,obj){
+	obj.find(".timer").css("opacity",1);
+	obj.find("img.indicator").hide();
 	var last_tweet = null;
 	var resp = d;
 	var $this = obj;
@@ -181,7 +183,8 @@ function card_cb(d,o,box,box_count,curr_iteration,obj){
 var build_card_entry = function(cb,co,box,box_count,curr_iteration,obj){
 	the_url = build_search_query(co);
 	var jsonp_url = the_url+"&callback=?";
-	
+	obj.find(".timer").css("opacity",0);
+	obj.find("img.indicator").show();
 	$.getJSON(jsonp_url,{},function(res){
 		cb(res,co,box,box_count,curr_iteration,obj);
 	}).error(function(){ obj.find(".ui-dashbox-content").find("p.dashbox-loading").html("Problem contacting Twitter..."); });

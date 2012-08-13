@@ -71,6 +71,7 @@
 				margin:0 auto;
 			}
 			.ui-dashbox{
+				position:relative;
 				max-width:20%;
 				min-width:300px;
 				float:left;
@@ -93,6 +94,14 @@
 				-o-transform: rotate(-4deg);
 				-ms-transform: rotate(-4deg);
 				transform: rotate(-4deg);
+			}
+			
+			.ui-dashbox img.indicator{
+				z-index: 99;
+				position: absolute;
+				top: 13px;
+				left: 14px;
+				display:none;
 			}
 			
 			.fullWidth{
