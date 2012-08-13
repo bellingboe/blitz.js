@@ -205,8 +205,6 @@ function column_ajax(){
 	$(".ui-dashbox").each(function(){
 		var $this = $(this);
 		
-		stop_timer($this);
-		
 		$this.timer;
 		$this.timerCurrent;
 		$this.timerFinish;
