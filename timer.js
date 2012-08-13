@@ -12,10 +12,16 @@ function drawTimer(context,percent){
 function stopWatch(c){
 	var index = c.index();
 	timer_bag[index].seconds = (timer_bag[index].timerFinish-(new Date().getTime()))/1000;
+	var retry = c.find(".retry-amt");
+	var retry_count = retry.length;
+	if(retry_count > 0){
+		retry.html(Math.ceil(timer_bag[index].seconds));
+	}
+	
 	if( timer_bag[index].seconds <= 0){
 		drawTimer(c,99);
 		stop_timer(c);
-		single_card_run(c);
+		single_card_run(c,0);
 	}else{
 		var percent = 100-((timer_bag[index].seconds/timer_bag[index].timerSeconds)*100);
 		drawTimer(c,percent);

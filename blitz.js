@@ -147,7 +147,7 @@ function card_cb(d,o,box,box_count,curr_iteration,obj){
 		$this.find(".ui-dashbox-content").find("p.dashbox-loading").html("No Tweets to display.");
 	}else{
 		$this.attr("data-last-loaded",resp.results[0].id_str);
-		$this.find(".ui-dashbox-content").find("p.dashbox-loading").remove();
+		$this.find(".ui-dashbox-content").find("p.dashbox-loading").hide();
 		for(var r in d.results){
 			cr = d.results[r];
 			box.push(cr);
@@ -182,12 +182,32 @@ function card_cb(d,o,box,box_count,curr_iteration,obj){
 */
 var build_card_entry = function(cb,co,box,box_count,curr_iteration,obj){
 	the_url = build_search_query(co);
-	var jsonp_url = the_url+"&callback=?";
+	var jsonp_url = the_url;
 	obj.find(".timer").css("opacity",0);
 	obj.find("img.indicator").show();
-	$.getJSON(jsonp_url,{},function(res){
+	/*
+	$.getJSON(jsonp_url,{},function(res,status,xhr){
 		cb(res,co,box,box_count,curr_iteration,obj);
 	}).error(function(){ obj.find(".ui-dashbox-content").find("p.dashbox-loading").html("Problem contacting Twitter..."); });
+	*/
+	
+	$.ajax({
+		url: jsonp_url,
+		dataType: 'jsonp',
+		timeout:5000,
+		success: function( res ) {
+		  cb(res,co,box,box_count,curr_iteration,obj);
+		},
+		error: function( data ) {
+			console.log("err");
+			var sec = main_column_timer/1000;
+			obj.find("img.indicator").hide();
+			obj.find(".timer").css("opacity",1);
+			single_card_run(obj,1);
+			obj.find(".ui-dashbox-content").find("p.dashbox-loading").show().html("Problem contacting Twitter.<br><br>Retrying in <span class='retry-amt'>"+sec+"</span> seconds.");
+		}
+	});
+	
 }
 
 /*
@@ -195,7 +215,7 @@ var build_card_entry = function(cb,co,box,box_count,curr_iteration,obj){
 */
 function initial_ajax_kickoff(){
 	$(".ui-dashbox").each(function(){
-		single_card_run( $(this) );
+		single_card_run( $(this) , 0 );
 	});
 	console.log(timer_bag);
 }
@@ -218,12 +238,6 @@ function column_sizer(){
 		$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
 	}
 	
-}
-
-function create(str){
-	var id = $(".ui-dashbox").length;
-	var html = '<div class="ui-dashbox" id="box_'+id+'" data-objects="'+str+'"><header><div class="timer fill"></div><span>'+str+'</span> <a href="#"><img src="images/gear.png" /></a></header><a href="#" class="show-pool-button">Show More</a><section class="ui-dashbox-content"><p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p></section><footer><a href="#" class="uibutton">Reveal Older</a></footer></div>';
-	var obj = $(html).appendTo( $("#main_dashbox") );
 }
 
 function single_card_run_by_index(i){
