@@ -205,6 +205,8 @@ function column_ajax(){
 	$(".ui-dashbox").each(function(){
 		var $this = $(this);
 		
+		stop_timer($this);
+		
 		$this.timer;
 		$this.timerCurrent;
 		$this.timerFinish;
@@ -265,4 +267,10 @@ function column_sizer(){
 		$(".ui-dashbox").removeClass("fullWidth").removeClass("halfWidth").removeClass("threeColWidth").removeClass("fourColWidth").addClass("columnWidth"); // default
 	}
 	
+}
+
+function create(str){
+	var id = $(".ui-dashbox").length;
+	var html = '<div class="ui-dashbox" id="box_'+id+'" data-objects="'+str+'"><header><div class="timer fill"></div><span>'+str+'</span> <a href="#"><img src="images/gear.png" /></a></header><a href="#" class="show-pool-button">Show More</a><section class="ui-dashbox-content"><p class="dashbox-loading" style="padding:15px;text-align:center;">Loading...</p></section><footer><a href="#" class="uibutton">Reveal Older</a></footer></div>';
+	var obj = $(html).appendTo( $("#main_dashbox") );
 }
