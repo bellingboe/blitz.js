@@ -110,9 +110,10 @@
 		<script src="color.js"></script>
 		<script src="mobile.js"></script>
 		<script src="blitz.js"></script>
+		<script src="js/dragScroll.js"></script>
 		<script>
 			$(document).ready(function(){
-				
+				$(".ui-dashbox-content").dragScroll();
 				$(".ui-dashbox").attr("data-times-loaded",0);
 				
 				initial_ajax_kickoff();
