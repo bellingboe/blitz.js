@@ -113,7 +113,9 @@
 		<script src="js/dragScroll.js"></script>
 		<script>
 			$(document).ready(function(){
-				$(".ui-dashbox-content").dragScroll();
+				$(".ui-dashbox-content").dragScroll({
+					selectText: true
+				});
 				$(".ui-dashbox").attr("data-times-loaded",0);
 				
 				initial_ajax_kickoff();
