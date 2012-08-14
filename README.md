@@ -12,6 +12,6 @@ http://brenden.me/blitz/
 
 The Masonry demo is broken, but found here.
 
-http://brenden.me/blitz/masonry.html
+http://brenden.me/blitz/tests/masonry.html
 
 
