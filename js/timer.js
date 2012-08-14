@@ -55,7 +55,7 @@ function start_timer(c){
 	timer_bag[index].timerSeconds = main_column_timer / 1000;
 	timer_bag[index].timerCurrent = 0;
 	timer_bag[index].timerFinish = new Date().getTime()+(timer_bag[index].timerSeconds*1000);
-	timer_bag[index].timer = setInterval(function(){ stopWatch(c) },50);
+	timer_bag[index].timer = setInterval(function(){ stopWatch(c) },1000);
 }
 
 function stop_all_timers(){
