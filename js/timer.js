@@ -30,6 +30,7 @@ function stopWatch(c){
 
 function stop_timer(c){
 	update_doc_title();
+	c.find(".timer").removeClass("timer-shadow");
 	c.attr("data-times-loaded" , parseInt(c.attr("data-times-loaded"))+1);
 	clear_timer(c);
 }
@@ -45,11 +46,13 @@ function clear_timer_by_index(i){
 	$obj.attr("data-paused",1);
 	$obj.find(".timer").parent().attr("title","Click to Start");
 	clearInterval( t_o.timer );
+	$obj.find(".timer").removeClass("timer-shadow");
 	drawTimer($obj,0);
 }
 
 function start_timer(c){
 	var index = c.index();
+	c.find(".timer").addClass("timer-shadow");
 	c.attr("data-paused",0);
 	c.find(".timer").parent().attr("title","Click to Pause");
 	timer_bag[index].timerSeconds = main_column_timer / 1000;
