@@ -26,7 +26,7 @@
 		<section id="main_dashbox">
 			<div class="ui-dashbox" id="box_0" data-objects="#Olympics">
 				<header><img class="indicator" src="images/indicator.gif" />
-				<a href="#">
+				<a href="#" class="start-stop">
 					<div class="timer fill"></div>
 				</a><span>#Olympics</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
@@ -39,7 +39,7 @@
 			</div>
 			<div class="ui-dashbox" id="box_1" data-objects="#MSL">
 				<header><img class="indicator" src="images/indicator.gif" />
-				<a href="#">
+				<a href="#" class="start-stop">
 					<div class="timer fill"></div>
 				</a><span>#MSL</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
@@ -52,7 +52,7 @@
 			</div>
 			<div class="ui-dashbox" id="box_2" data-objects="#iPhone,#Apple">
 				<header><img class="indicator" src="images/indicator.gif" />
-				<a href="#">
+				<a href="#" class="start-stop">
 					<div class="timer fill"></div>
 				</a><span>#iPhone,#Apple</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
@@ -65,7 +65,7 @@
 			</div>
 			<div class="ui-dashbox" id="box_3" data-objects="#Obama">
 				<header><img class="indicator" src="images/indicator.gif" />
-				<a href="#">
+				<a href="#" class="start-stop">
 					<div class="timer fill"></div>
 				</a><span>#Obama</span> <a href="#" class="tool"><img src="images/gear.png" /></a></header>
 				<a href="#" class="show-pool-button">Show More</a>
@@ -129,9 +129,9 @@
 					column_sizer();
 				});
 				
-				$(".timer").parent().tooltip();
+				$(".start-stop").tooltip();
 				
-				$(".timer").parent().click(function(ev){
+				$(".start-stop").click(function(ev){
 					ev.preventDefault();
 					var $obj = $(this).parent().parent();
 					var p = $obj.attr("data-paused");
