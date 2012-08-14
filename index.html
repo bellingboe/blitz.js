@@ -5,13 +5,13 @@
 		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
 		-->
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<link href="style.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<link rel="apple-touch-startup-image" href="images/startup.png">
 		<link rel="icon" href="favicon.ico" />
-		<link rel="stylesheet" href="bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
 		<title>#dashblitz</title>
 	</head>
 	<body>
@@ -106,16 +106,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script src="bootstrap/js/bootstrap-tooltip.js"></script>
 		<script src="bootstrap/js/bootstrap-modal.js"></script>
-		<script src="timer.js"></script>
-		<script src="color.js"></script>
-		<script src="mobile.js"></script>
-		<script src="blitz.js"></script>
-		<script src="js/dragScroll.js"></script>
+		<script src="js/timer.js"></script>
+		<script src="js/color.js"></script>
+		<script src="js/mobile.js"></script>
+		<script src="js/blitz.js"></script>
 		<script>
 			$(document).ready(function(){
-				$(".ui-dashbox-content").dragScroll({
-					selectText: true
-				});
+				
 				$(".ui-dashbox").attr("data-times-loaded",0);
 				
 				initial_ajax_kickoff();
