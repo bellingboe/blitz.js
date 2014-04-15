@@ -1,13 +1,7 @@
-blitz
-=====
 
-A new Twitter experience
+# blitz (2012)
 
-Demos
-=====
+[most up to date example](http://blitz.brenden.me/)
 
-Open the following on a computer, iPhone, or iPad. It's responsive to each device.
-
-http://bellingboe.github.com/blitz/
 
 
